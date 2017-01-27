@@ -1,0 +1,6 @@
+[submodule "vendor/spdlog"]
+	path = vendor/spdlog
+	url = https://github.com/gabime/spdlog.git
+[submodule "vendor/Catch"]
+	path = vendor/Catch
+	url = https://github.com/philsquared/Catch.git

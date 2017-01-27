@@ -27,3 +27,8 @@
 *.exe
 *.out
 *.app
+
+# CMake related files
+/build
+/.idea
+/cmake-build-*
