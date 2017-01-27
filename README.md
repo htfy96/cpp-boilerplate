@@ -19,7 +19,7 @@ A modern boilerplate for C++ project, built on Cmake, Catch and spdlog
 
 ## How to use this
 
-1. Download this project
+1. Download this project: `git clone --recursive https://github.com/htfy96/cpp-boilerplate.git`
 2. Change `example` in filenames/namespaces under `src/`, `test/` into `your_project`
 3. Change `CMakeLists.txt`: `example` -> `your_project`
 4. Change `.travis.yml`: `example` -> `your_project`
