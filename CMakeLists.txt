@@ -59,7 +59,7 @@ if (example-build_tests)
     target_link_libraries(example-test example)
 
     list(APPEND sources_to_format ${example_test_SOURCE} ${example_test_HDRS})
-    list(APPEND targets_to_tidy ${example-test)
+    list(APPEND targets_to_tidy ${example-test})
 
 
     add_test(example_test example-test)
