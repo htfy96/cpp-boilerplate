@@ -1,5 +1,5 @@
 # cpp-boilerplate
-A modern boilerplate for C++ project, built on Cmake, Catch and spdlog
+A modern boilerplate for C++ project, built on Cmake, Conan with Catch and spdlog.
 
 **Now you are browsing the `v2` branch! See differences below**
 
@@ -30,11 +30,26 @@ A modern boilerplate for C++ project, built on Cmake, Catch and spdlog
 7. Push & Enjoy it!
 
 ### Build
+[Install Conan first](https://docs.conan.io/en/latest/installation.html)
+
 ```
 mkdir -p build
 cd build
+conan -s build_type=Debug --build=missing -s compiler.stdlib=libstdc++11 ..
+# For alternative compiler configuration:
+# conan -s build_type=Debug -s compiler.stdlib=libstdc++11 --build=missing \
+#   -s compiler=gcc -s compiler.version=6 ..
+#   OR
+# Use Conan configurations (https://docs.conan.io/en/latest/getting_started.html#building-with-other-configurations)
+# and specify with conan -pr PATH ..
 cmake -Dexample-build_tests=ON \ 
     -DCMAKE_BUILD_TYPE=debug ..
+# For alternative compiler:
+# cmake -Dexample-build_tests=ON \
+# -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+# -DCMAKE_C_COMPILER=gcc-6 \
+# -DCMAKE_CXX_COMPILER=g++-6 \
+# ..
 make clangformat # to format your files
 make -j4
 ctest # run tests
@@ -42,6 +57,7 @@ ctest # run tests
 
 ## Differences between `master` and v2
 - v2 is based on Ubuntu 18.04
+- v2 uses Conan instead of git submodule to manage dependencies
 - v2 uses g++-6/7 and clang++-6, while master uses g++-4.9/5 and clang++-3.8
 - v2 enforces minimal CMake version = 3.9, while master only enforces 3.1
 - v2 includes clang-tidy as an enforced check
