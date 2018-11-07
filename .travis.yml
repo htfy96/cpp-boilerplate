@@ -49,15 +49,15 @@ matrix:
           - X_CONAN_BUILD_TYPE=RelWithDebInfo
           - BUILD_TYPE=RelWithDebInfo
     - env: 
-          - X_CC=clang-6
-          - X_CXX=clang++-6
+          - X_CC=clang-6.0
+          - X_CXX=clang++-6.0
           - X_CONAN_COMPILER=clang
           - X_CONAN_COMPILER_VERSION=6.0
           - X_CONAN_BUILD_TYPE=Debug
           - BUILD_TYPE=Debug
     - env:
-          - X_CC=clang-6
-          - X_CXX=clang++-6
+          - X_CC=clang-6.0
+          - X_CXX=clang++-6.0
           - X_CONAN_COMPILER=clang
           - X_CONAN_COMPILER_VERSION=6.0
           - X_CONAN_BUILD_TYPE=RelWithDebInfo
