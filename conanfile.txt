@@ -1,0 +1,6 @@
+[requires]
+catch2/2.4.1@bincrafters/stable
+spdlog/1.2.1@bincrafters/stable
+
+[generators]
+cmake

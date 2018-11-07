@@ -8,7 +8,7 @@ services:
 
 before_install:
     - docker pull htfy96/build-image:2-lite
-    - docker run -ti -v $(pwd):/data htfy96/build-image:2-lite bash -c "cd /data; mkdir -p build && cd build && rm -rf *; cmake -Dexample-build_tests=ON -DCMAKE_C_COMPILER=${X_CC} -DCMAKE_CXX_COMPILER=${X_CXX} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} .."
+    - docker run -ti -v $(pwd):/data htfy96/build-image:2-lite bash -c "cd /data; mkdir -p build && cd build && rm -rf *; conan install -e CXX=${X_CXX} -e CC=${X_CC} -s compiler.libcxx=libstdc++11 -s compiler=${X_CONAN_COMPILER} -s compiler.version=${X_CONAN_COMPILER_VERSION} --build=missing -s build_type=${X_CONAN_BUILD_TYPE} .. && cmake -Dexample-build_tests=ON -DCMAKE_C_COMPILER=${X_CC} -DCMAKE_CXX_COMPILER=${X_CXX} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} .."
 
 script:
     - docker run -ti -v $(pwd):/data htfy96/build-image:2-lite bash -c 'cd /data/build; make -j4'
@@ -19,24 +19,42 @@ matrix:
     - env: 
           - X_CC=gcc-6
           - X_CXX=g++-6
+          - X_CONAN_COMPILER=gcc
+          - X_CONAN_COMPILER_VERSION=6
+          - X_CONAN_BUILD_TYPE=Debug
           - BUILD_TYPE=Debug
     - env: 
           - X_CC=gcc-6
           - X_CXX=g++-6
-          - BUILD_TYPE=Release
+          - X_CONAN_COMPILER=gcc
+          - X_CONAN_COMPILER_VERSION=6
+          - X_CONAN_BUILD_TYPE=RelWithDebInfo
+          - BUILD_TYPE=RelWithDebInfo
     - env: 
           - X_CC=gcc-7
           - X_CXX=g++-7
+          - X_CONAN_COMPILER=gcc
+          - X_CONAN_COMPILER_VERSION=7
+          - X_CONAN_BUILD_TYPE=Debug
           - BUILD_TYPE=Debug
     - env: 
           - X_CC=gcc-7
           - X_CXX=g++-7
-          - BUILD_TYPE=Release
+          - X_CONAN_COMPILER=gcc
+          - X_CONAN_COMPILER_VERSION=7
+          - X_CONAN_BUILD_TYPE=RelWithDebInfo
+          - BUILD_TYPE=RelWithDebInfo
     - env: 
           - X_CC=clang-6
           - X_CXX=clang++-6
+          - X_CONAN_COMPILER=clang
+          - X_CONAN_COMPILER_VERSION=6.0
+          - X_CONAN_BUILD_TYPE=Debug
           - BUILD_TYPE=Debug
     - env:
           - X_CC=clang-6
           - X_CXX=clang++-6
-          - BUILD_TYPE=Release
+          - X_CONAN_COMPILER=clang
+          - X_CONAN_COMPILER_VERSION=6.0
+          - X_CONAN_BUILD_TYPE=RelWithDebInfo
+          - BUILD_TYPE=RelWithDebInfo

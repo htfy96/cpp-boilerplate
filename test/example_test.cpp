@@ -1,5 +1,5 @@
 #include "example/example.hpp"
-#include <catch.hpp>
+#include <catch2/catch.hpp>
 #include <spdlog/spdlog.h>
 
 TEST_CASE("Times should return the multiplication", "[times]")
