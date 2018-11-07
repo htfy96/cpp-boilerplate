@@ -8,11 +8,15 @@ services:
 
 before_install:
     - docker pull htfy96/build-image:2-lite
-    - docker run -ti -v $(pwd):/data htfy96/build-image:2-lite bash -c "cd /data; mkdir -p build && cd build && rm -rf *; conan install -e CXX=${X_CXX} -e CC=${X_CC} -s compiler.libcxx=libstdc++11 -s compiler=${X_CONAN_COMPILER} -s compiler.version=${X_CONAN_COMPILER_VERSION} --build=missing -s build_type=${X_CONAN_BUILD_TYPE} .. && cmake -Dexample-build_tests=ON -DCMAKE_C_COMPILER=${X_CC} -DCMAKE_CXX_COMPILER=${X_CXX} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} .."
+    - docker run -ti -v $(pwd):/data htfy96/build-image:2-lite bash -c "cd /data; mkdir -p build && cd build && rm -rf * && export CONAN_USER_HOME=\$(pwd)/../.conan-build; conan install -e CXX=${X_CXX} -e CC=${X_CC} -s compiler.libcxx=libstdc++11 -s compiler=${X_CONAN_COMPILER} -s compiler.version=${X_CONAN_COMPILER_VERSION} --build=missing -s build_type=${X_CONAN_BUILD_TYPE} .. && cmake -Dexample-build_tests=ON -DCMAKE_C_COMPILER=${X_CC} -DCMAKE_CXX_COMPILER=${X_CXX} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} .."
 
 script:
-    - docker run -ti -v $(pwd):/data htfy96/build-image:2-lite bash -c 'cd /data/build; make -j4'
-    - docker run -ti -v $(pwd):/data htfy96/build-image:2-lite bash -c 'cd /data/build; ctest --output-on-failure; valgrind --track-fds=yes ctest --output-on-failure'
+    - docker run -ti -v $(pwd):/data htfy96/build-image:2-lite bash -c 'cd /data/build; export CONAN_USER_HOME="$(pwd)/../.conan-build"; make -j4'
+    - docker run -ti -v $(pwd):/data htfy96/build-image:2-lite bash -c 'cd /data/build; export CONAN_USER_HOME="$(pwd)/../.conan-build"; ctest --output-on-failure; valgrind --track-fds=yes ctest --output-on-failure'
+
+cache:
+    directories:
+        - .conan-build/
 
 matrix:
   include:
