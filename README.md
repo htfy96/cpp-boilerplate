@@ -55,6 +55,16 @@ make -j4
 ctest # run tests
 ```
 
+### Options
+Options can be defined with `cmake ... -DOPTION_KEY=OPTION_VALUE`
+
+| Key | Possible Values | Effect |
+|-----|-----------------|--------|
+| `USE_GOLD_LINKER`     | `ON`/`OFF`    | Use GNU gold linker instead of ld. Only effect if gold is found.  |
+| `INCREMENT_LINK`      | `ON`/`OFF`    | Use gold linker's `--incremental` flag to speed up relink speed. Effective only when `USE_GOLD_LINKER` is specified. Note that this may disable many security protections like relto or PIE. Only use this when working on *Really* large project. |
+| `example-build_tests` | `ON`/`OFF`    | Build test or not                                         |
+| `CMAKE_BUILD_TYPE`    | `Debug`/`Release`/`RelWithDebInfo`    | Build type    |
+
 ## Differences between `master` and v2
 - v2 is based on Ubuntu 18.04
 - v2 uses Conan instead of git submodule to manage dependencies
